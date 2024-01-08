@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "username": "casey5003",
+      "phoneNumber": "5934553380",
+      "position": "analyst",
+      "sex": "male",
+      "id": "ecef7e79-9f21-49ca-84d4-cb1063d97883"
+    },
+    {
+      "username": "cameron5393",
+      "phoneNumber": "2128892075",
+      "position": "designer",
+      "sex": "female",
+      "id": "e456291d-9d05-451b-84c7-99a2a3d26174"
+    },
+    {
+      "username": "jordan0431",
+      "phoneNumber": "3273964648",
+      "position": "designer",
+      "sex": "female",
+      "id": "abcce32b-f978-4570-b0b7-85f83d90c52f"
+    },
+    {
+      "username": "morgan3591",
+      "phoneNumber": "4922089351",
+      "position": "developer",
+      "sex": "female",
+      "id": "593f61a6-cadb-48bd-be24-1c016da5753e"
+    },
+    {
+      "username": "riley7441",
+      "phoneNumber": "6540698609",
+      "position": "administrator",
+      "sex": "male",
+      "id": "966bd424-be41-46cc-9ca9-ff4dba9c5270"
+    },
+    {
+      "username": "taylor3834",
+      "phoneNumber": "6115093497",
+      "position": "designer",
+      "sex": "male",
+      "id": "60b511f4-080f-474d-8da3-a3badf1469a8"
+    },
+    {
+      "username": "casey7505",
+      "phoneNumber": "4262904672",
+      "position": "designer",
+      "sex": "other",
+      "id": "21e09dfb-c045-4877-b77e-efa858ba3776"
+    },
+    {
+      "username": "alex2689",
+      "phoneNumber": "5166855168",
+      "position": "analyst",
+      "sex": "other",
+      "id": "93fb0567-485d-48b9-9d69-8369aacd979e"
+    },
+    {
+      "username": "kelly7153",
+      "phoneNumber": "7853259669",
+      "position": "administrator",
+      "sex": "female",
+      "id": "85f29098-2f9a-4de5-8d44-4887a98ab0e5"
+    },
+    {
+      "username": "alex4997",
+      "phoneNumber": "5299081246",
+      "position": "manager",
+      "sex": "male",
+      "id": "569c74c2-924e-4fbb-b9ce-dc49e6291ffc"
+    }
+  ]
+}
