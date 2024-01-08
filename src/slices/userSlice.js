@@ -1,5 +1,5 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { options } from "../../constant";
 export const fetchUserList = createAsyncThunk("users/fetchPost", async () => {
   try {
     const data = await fetch("/users");
@@ -12,7 +12,18 @@ export const fetchUserList = createAsyncThunk("users/fetchPost", async () => {
   }
 });
 
-export const postUserList = createAsyncThunk("users/postPost", async () => {});
+export const addNewPost = createAsyncThunk(
+  "users/addNewPost",
+  async (newPost) => {
+    try {
+      const data = await fetch("/users", options({ ...newPost, id: nanoid() }));
+      const dataJSON = await data.json();
+      return dataJSON;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 const userSlice = createSlice({
   name: "users",
   initialState: {
@@ -37,9 +48,7 @@ const userSlice = createSlice({
         };
       },
     },
-    removeUser: (state, action) => {
-      
-    },
+    removeUser: (state, action) => {},
   },
   extraReducers: (builder) => {
     builder
@@ -53,6 +62,9 @@ const userSlice = createSlice({
       .addCase(fetchUserList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(addNewPost.fulfilled, (state, action) => {
+        state.users.push(action.payload);
       });
   },
 });
