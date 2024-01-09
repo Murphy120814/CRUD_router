@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import IndividualUser from "./IndividualUser";
 import { fetchUserList, selectAllUser, getStatus } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import ShimmerUi from "./ShimmerUi";
 function UserList() {
   const dispatch = useDispatch();
   const userList = useSelector(selectAllUser);
@@ -16,7 +16,7 @@ function UserList() {
   }, [status, dispatch]);
 
   if (status === "loading") {
-    renderedUserList = <p>Loading ....</p>;
+    renderedUserList = <ShimmerUi />;
   }
   if (status === "success") {
     const orderedList = userList
