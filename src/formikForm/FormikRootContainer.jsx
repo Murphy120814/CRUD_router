@@ -4,7 +4,12 @@ import * as Yup from "yup";
 import FormikControlComponent from "./FormikControlComponent";
 import { sexOptions } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewPost, updateUser } from "../slices/userSlice";
+import {
+  addNewPost,
+  updateUser,
+  updateNotificationMessage,
+  updateNotificationStatus,
+} from "../slices/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const handleNumericInputChange = (e, formikChange) => {
@@ -27,7 +32,7 @@ function FormikRootComponent({ savedUserInfo }) {
 
   const validationSchema = Yup.object({
     username: Yup.string().required("User Name is required!"),
-    sex: Yup.string().required("Sex is required!"),
+    sex: Yup.string(),
     position: Yup.string().required("Role is required!"),
     phoneNumber: Yup.string()
       .required("Phone number is required!")
@@ -42,15 +47,17 @@ function FormikRootComponent({ savedUserInfo }) {
 
     if (savedUserInfo !== undefined) {
       dispatch(updateUser({ ...savedUserInfo, ...values }));
-      onSubmitProps.resetForm();
+      dispatch(updateNotificationStatus(true));
+      dispatch(updateNotificationMessage("updated"));
     } else {
       dispatch(addNewPost({ username, phoneNumber, sex, position }));
-      onSubmitProps.resetForm();
+      dispatch(updateNotificationStatus(true));
+      dispatch(updateNotificationMessage("added"));
     }
     setTimeout(() => {
       navigate("/");
-    }, 2000);
-
+    }, 1000);
+    onSubmitProps.resetForm();
   };
 
   return (
@@ -65,10 +72,10 @@ function FormikRootComponent({ savedUserInfo }) {
               <div className="mb-2">
                 <FormikControlComponent
                   control="input"
-                  label="User Name"
+                  label="User Name*"
                   type="text"
                   name="username"
-                  placeholder="Prath1208"
+                  placeholder="Prathm1208"
                 />
               </div>
 
@@ -76,7 +83,7 @@ function FormikRootComponent({ savedUserInfo }) {
                 <div className=" w-full lg:w-6/12">
                   <FormikControlComponent
                     control="input"
-                    label="Contact Number"
+                    label="Contact Number*"
                     type="text"
                     name="phoneNumber"
                     onChange={(e) =>
@@ -98,7 +105,7 @@ function FormikRootComponent({ savedUserInfo }) {
               <div className="mb-2">
                 <FormikControlComponent
                   control="input"
-                  label="Position"
+                  label="Position*"
                   type="text"
                   name="position"
                   placeholder="React Developer"

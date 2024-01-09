@@ -5,7 +5,11 @@ import viewPng from "../assets/view.png";
 import { capitalize } from "../../constant";
 import { UserInfoShow, Image } from "../common";
 import { useDispatch } from "react-redux";
-import { removeUser } from "../slices/userSlice";
+import {
+  removeUser,
+  updateNotificationStatus,
+  updateNotificationMessage,
+} from "../slices/userSlice";
 import { parseISO, formatDistanceToNow } from "date-fns";
 function IndividualUser({ userInfo }) {
   const dispatch = useDispatch();
@@ -32,7 +36,14 @@ function IndividualUser({ userInfo }) {
         <Image toGo={`/edit/${userInfo.id}`}>{editPng}</Image>
         <Image
           onClick={() => {
-            dispatch(removeUser(userInfo.id));
+            const userResponse = confirm(
+              "Are you sure want to delete user, action cannot be undone!!"
+            );
+            if (userResponse) {
+              dispatch(removeUser(userInfo.id));
+              dispatch(updateNotificationStatus(true));
+              dispatch(updateNotificationMessage("deleted"));
+            }
           }}>
           {deletePng}
         </Image>

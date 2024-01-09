@@ -10,14 +10,16 @@ import {
   Error,
   Footer,
 } from "./components";
+import Notification from "./features/Notification";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 function App() {
   return (
-    <div className="flex min-h-screen w-full flex-col justify-between bg-backgroundColor dark:bg-black">
+    <div className="relative flex min-h-screen w-full flex-col justify-between bg-backgroundColor dark:bg-black">
       <Provider store={store}>
         <Navbar />
         <Outlet />
         <Footer />
+        <Notification />
       </Provider>
     </div>
   );

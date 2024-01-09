@@ -40,13 +40,14 @@ const userSlice = createSlice({
     users: [],
     status: "idle", // loading || success || failure
     error: null,
+    notification: {
+      status: false,
+      msg: "",
+    },
   },
   reducers: {
     removeUser: (state, action) => {
-      const deleteUserIndex = state.users.findIndex(
-        (user) => user.id === action.payload
-      );
-      state.users.splice(deleteUserIndex, 1);
+      state.users = state.users.filter((user) => user.id !== action.payload);
     },
     updateUser: (state, action) => {
       state.users = state.users.map((user) => {
@@ -58,6 +59,13 @@ const userSlice = createSlice({
         }
         return user;
       });
+    },
+    updateNotificationStatus: (state, action) => {
+      state.notification.status = action.payload;
+     
+    },
+    updateNotificationMessage: (state, action) => {
+      state.notification.msg = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -90,6 +98,11 @@ const userSlice = createSlice({
 export const selectAllUser = (globalState) => globalState.users.users;
 export const getStatus = (globalState) => globalState.users.status;
 export const getError = (globalState) => globalState.users.error;
-
-export const { removeUser, updateUser } = userSlice.actions;
+export const getNotification = (globalState) => globalState.users.notification;
+export const {
+  removeUser,
+  updateUser,
+  updateNotificationMessage,
+  updateNotificationStatus,
+} = userSlice.actions;
 export default userSlice.reducer;

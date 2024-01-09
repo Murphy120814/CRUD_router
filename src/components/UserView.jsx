@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectAllUser } from "../slices/userSlice";
 import UserCard from "../features/UserCard";
@@ -14,6 +14,11 @@ function UserView() {
         {Object.entries(user).map(([field, value], index) => (
           <UserCard field={field} value={value} key={index} />
         ))}
+        <Link to={`/edit/${id}`}>
+          <button className="mt-4 rounded-2xl bg-blue-700 px-4 py-2 font-semibold text-white">
+            Update
+          </button>
+        </Link>
       </div>
     </div>
   );
