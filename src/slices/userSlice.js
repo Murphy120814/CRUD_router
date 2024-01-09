@@ -41,23 +41,12 @@ const userSlice = createSlice({
     error: null,
   },
   reducers: {
-    addUser: {
-      reducer: (state, action) => {
-        state.users.push(action.payload);
-      },
-      prepare: (username, phoneNumber, position, sex) => {
-        return {
-          payload: {
-            username,
-            phoneNumber,
-            position,
-            sex,
-            id: nanoid(),
-          },
-        };
-      },
+    removeUser: (state, action) => {
+      const deleteUserIndex = state.users.findIndex(
+        (user) => user.id === action.payload
+      );
+      state.users.splice(deleteUserIndex, 1);
     },
-    removeUser: (state, action) => {},
   },
   extraReducers: (builder) => {
     builder
@@ -89,5 +78,5 @@ export const selectAllUser = (globalState) => globalState.users.users;
 export const getStatus = (globalState) => globalState.users.status;
 export const getError = (globalState) => globalState.users.error;
 
-export const { addUser } = userSlice.actions;
+export const { removeUser } = userSlice.actions;
 export default userSlice.reducer;
