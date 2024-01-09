@@ -1,9 +1,10 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
-import { options } from "../../constant";
+import { options, USER_URL } from "../../constant";
 import { sub } from "date-fns";
+
 export const fetchUserList = createAsyncThunk("users/fetchPost", async () => {
   try {
-    const data = await fetch("/users");
+    const data = await fetch(USER_URL);
     const dataJSON = await data.json();
     console.log("hell", dataJSON);
     return dataJSON;
@@ -17,7 +18,14 @@ export const addNewPost = createAsyncThunk(
   "users/addNewPost",
   async (newPost) => {
     try {
-      const data = await fetch("/users", options({ ...newPost, id: nanoid(), timeOfCreation: new Date().toISOString() }));
+      const data = await fetch(
+        USER_URL,
+        options({
+          ...newPost,
+          id: nanoid(),
+          timeOfCreation: new Date().toISOString(),
+        })
+      );
       const dataJSON = await data.json();
       return dataJSON;
     } catch (error) {
@@ -63,7 +71,7 @@ const userSlice = createSlice({
           user.timeOfCreation = sub(new Date(), {
             minutes: min++,
           }).toISOString();
-          return user
+          return user;
         });
         state.users = state.users.concat(loadedPost);
       })
