@@ -1,5 +1,6 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import { options } from "../../constant";
+import { sub } from "date-fns";
 export const fetchUserList = createAsyncThunk("users/fetchPost", async () => {
   try {
     const data = await fetch("/users");
@@ -16,7 +17,7 @@ export const addNewPost = createAsyncThunk(
   "users/addNewPost",
   async (newPost) => {
     try {
-      const data = await fetch("/users", options({ ...newPost, id: nanoid() }));
+      const data = await fetch("/users", options({ ...newPost, id: nanoid(), timeOfCreation: new Date().toISOString() }));
       const dataJSON = await data.json();
       return dataJSON;
     } catch (error) {
@@ -57,7 +58,14 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserList.fulfilled, (state, action) => {
         state.status = "success";
-        state.users = state.users.concat(action.payload);
+        let min = 1;
+        const loadedPost = action.payload.map((user) => {
+          user.timeOfCreation = sub(new Date(), {
+            minutes: min++,
+          }).toISOString();
+          return user
+        });
+        state.users = state.users.concat(loadedPost);
       })
       .addCase(fetchUserList.rejected, (state, action) => {
         state.status = "failed";

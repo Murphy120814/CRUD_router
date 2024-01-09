@@ -19,7 +19,10 @@ function UserList() {
     renderedUserList = <p>Loading ....</p>;
   }
   if (status === "success") {
-    renderedUserList = userList?.map((user) => (
+    const orderedList = userList
+      ?.slice()
+      .sort((a, b) => b.timeOfCreation.localeCompare(a.timeOfCreation));
+    renderedUserList = orderedList?.map((user) => (
       <IndividualUser key={user.id} userInfo={user} />
     ));
   }

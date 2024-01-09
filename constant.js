@@ -2,13 +2,13 @@ export const USER_URL =
   "https://my-json-server.typicode.com/Murphy120814/CRUD_router/users";
 
 export const options = (body) => ({
-  Method: "POST",
-  Headers: {
+  method: "POST",
+  headers: {
     Accept: "application.json",
     "Content-Type": "application/json",
   },
-  Body: JSON.stringify(body),
-  Cache: "default",
+  body: JSON.stringify(body),
+  cache: "default",
 });
 
 export const sexOptions = [

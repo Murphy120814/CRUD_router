@@ -5,6 +5,7 @@ import FormikControlComponent from "./FormikControlComponent";
 import { sexOptions } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewPost } from "../slices/userSlice";
+import { useNavigate } from "react-router-dom";
 const handleNumericInputChange = (e, formikChange) => {
   const value = e.target.value;
   // Allow only numeric input
@@ -13,6 +14,7 @@ const handleNumericInputChange = (e, formikChange) => {
   }
 };
 function FormikRootComponent() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -37,6 +39,10 @@ function FormikRootComponent() {
     console.log("formData", values);
     const { username, phoneNumber, sex, position } = values;
     dispatch(addNewPost({ username, phoneNumber, sex, position }));
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
+
     onSubmitProps.resetForm();
   };
 
