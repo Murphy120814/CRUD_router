@@ -33,11 +33,11 @@ export const appRouter = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/view/:index",
+        path: "/view/:id",
         element: <UserView />,
       },
       {
-        path: "/edit/:index",
+        path: "/edit/:id",
         element: <UserEdit />,
       },
       {

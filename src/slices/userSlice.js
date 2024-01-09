@@ -6,7 +6,7 @@ export const fetchUserList = createAsyncThunk("users/fetchPost", async () => {
   try {
     const data = await fetch(USER_URL);
     const dataJSON = await data.json();
-    console.log("hell", dataJSON);
+
     return dataJSON;
   } catch (error) {
     console.log(error);
@@ -23,6 +23,7 @@ export const addNewPost = createAsyncThunk(
         options({
           ...newPost,
           id: nanoid(),
+          lastUpdated: null,
           timeOfCreation: new Date().toISOString(),
         })
       );
@@ -47,6 +48,17 @@ const userSlice = createSlice({
       );
       state.users.splice(deleteUserIndex, 1);
     },
+    updateUser: (state, action) => {
+      state.users = state.users.map((user) => {
+        if (action.payload.id == user.id) {
+          return {
+            ...action.payload,
+            lastUpdated: new Date().toISOString(),
+          };
+        }
+        return user;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -60,6 +72,7 @@ const userSlice = createSlice({
           user.timeOfCreation = sub(new Date(), {
             minutes: min++,
           }).toISOString();
+          user.lastUpdated = null;
           return user;
         });
         state.users = state.users.concat(loadedPost);
@@ -78,5 +91,5 @@ export const selectAllUser = (globalState) => globalState.users.users;
 export const getStatus = (globalState) => globalState.users.status;
 export const getError = (globalState) => globalState.users.error;
 
-export const { removeUser } = userSlice.actions;
+export const { removeUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;

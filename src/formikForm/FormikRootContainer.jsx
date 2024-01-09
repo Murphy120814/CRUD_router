@@ -4,8 +4,9 @@ import * as Yup from "yup";
 import FormikControlComponent from "./FormikControlComponent";
 import { sexOptions } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewPost } from "../slices/userSlice";
+import { addNewPost, updateUser } from "../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+
 const handleNumericInputChange = (e, formikChange) => {
   const value = e.target.value;
   // Allow only numeric input
@@ -13,11 +14,11 @@ const handleNumericInputChange = (e, formikChange) => {
     formikChange(e);
   }
 };
-function FormikRootComponent() {
+function FormikRootComponent({ savedUserInfo }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const initialValues = {
+  const initialValues = savedUserInfo || {
     username: "",
     phoneNumber: "",
     position: "",
@@ -38,12 +39,18 @@ function FormikRootComponent() {
   const onSubmit = (values, onSubmitProps) => {
     console.log("formData", values);
     const { username, phoneNumber, sex, position } = values;
-    dispatch(addNewPost({ username, phoneNumber, sex, position }));
+
+    if (savedUserInfo !== undefined) {
+      dispatch(updateUser({ ...savedUserInfo, ...values }));
+      onSubmitProps.resetForm();
+    } else {
+      dispatch(addNewPost({ username, phoneNumber, sex, position }));
+      onSubmitProps.resetForm();
+    }
     setTimeout(() => {
       navigate("/");
-    }, 3000);
+    }, 2000);
 
-    onSubmitProps.resetForm();
   };
 
   return (
@@ -101,8 +108,8 @@ function FormikRootComponent() {
               <button
                 disabled={!(formik.isValid && formik.dirty)}
                 type="submit"
-                className="mt-2 w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-black focus:outline-none focus:ring-4 disabled:bg-black disabled:opacity-20 sm:w-auto">
-                Submit
+                className="mt-2 w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white  focus:outline-none focus:ring-4 disabled:bg-black disabled:opacity-20  disabled:dark:bg-slate-700 sm:w-auto">
+                {!savedUserInfo ? "Submit" : "Update"}
               </button>
             </Form>
           );

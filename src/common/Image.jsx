@@ -1,13 +1,17 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function Image(props) {
-  const { children, className, ...restProps } = props;
+  const { children, toGo = "", className, ...restProps } = props;
   return (
-    <img
-      src={children}
-      alt={children}
-      className={"w-[20px] h-[20px] cursor-pointer" + " " + className}
-      {...restProps}></img>
+    <Link to={toGo}>
+      <>
+        <img
+          src={children}
+          alt={children}
+          className={"h-[20px] w-[20px] cursor-pointer" + " " + className}
+          {...restProps}></img>
+      </>
+    </Link>
   );
 }
 

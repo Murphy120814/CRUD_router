@@ -17,3 +17,7 @@ export const sexOptions = [
   { key: "Female", value: "female" },
   { key: "Other", value: "other" },
 ];
+
+export function capitalize(value) {
+  return value[0].toUpperCase() + value.substring(1);
+}
